@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-user-plus me-2"></i>Yeni Üye Ekle
+                </h4>
+            </div>
+            <div class="card-body">
+                <form action="{{ url_for('uye_ekle') }}" method="POST">
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label for="isim" class="form-label">İsim Soyisim <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                <input type="text" class="form-control" id="isim" name="isim" placeholder="Üyenin adı ve soyadı" required>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="telefon" class="form-label">Telefon</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                <input type="tel" class="form-control" id="telefon" name="telefon" placeholder="Telefon numarası">
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="email" class="form-label">E-posta</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="E-posta adresi">
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-12 mb-4">
+                            <label for="adres" class="form-label">Adres</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                                <textarea class="form-control" id="adres" name="adres" rows="3" placeholder="Adres bilgisi"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{{ url_for('uyeler_listesi') }}" class="btn btn-secondary me-md-2">
+                            <i class="fas fa-times me-1"></i>İptal
+                        </a>
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-save me-1"></i>Kaydet
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function() {
+        // Form alanlarına odaklanıldığında efekt
+        $('.form-control').focus(function() {
+            $(this).closest('.input-group').addClass('shadow-sm');
+        }).blur(function() {
+            $(this).closest('.input-group').removeClass('shadow-sm');
+        });
+    });
+</script>
+{% endblock %}

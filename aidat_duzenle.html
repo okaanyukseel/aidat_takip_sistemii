@@ -1,0 +1,91 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header bg-warning">
+                <h4 class="mb-0">
+                    <i class="fas fa-edit me-2"></i>Aidat Düzenle
+                </h4>
+            </div>
+            <div class="card-body">
+                <form action="{{ url_for('aidat_duzenle', id=aidat.id) }}" method="POST">
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label for="uye_id" class="form-label">Üye <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                <select class="form-select" id="uye_id" name="uye_id" required>
+                                    {% for uye in uyeler %}
+                                        <option value="{{ uye.id }}" {% if uye.id == aidat.uye_id %}selected{% endif %}>{{ uye.isim }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="miktar" class="form-label">Miktar (TL) <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-lira-sign"></i></span>
+                                <input type="number" class="form-control" id="miktar" name="miktar" step="0.01" min="0" value="{{ aidat.miktar }}" required>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="tarih" class="form-label">Tarih <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                                <input type="date" class="form-control" id="tarih" name="tarih" value="{{ aidat.odeme_tarihi.strftime('%Y-%m-%d') if aidat.odeme_tarihi is not string else aidat.odeme_tarihi }}" required>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-12 mb-3">
+                            <label for="durum" class="form-label">Durum</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-check-circle"></i></span>
+                                <select class="form-select" id="durum" name="durum">
+                                    <option value="Ödendi" {% if aidat.durum == 'Ödendi' %}selected{% endif %}>Ödendi</option>
+                                    <option value="Ödenmedi" {% if aidat.durum == 'Ödenmedi' %}selected{% endif %}>Ödenmedi</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-12 mb-3">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <h6 class="card-title"><i class="fas fa-info-circle me-2"></i>Aidat Bilgileri</h6>
+                                    <p class="card-text mb-1"><small>Aidat ID: <strong>{{ aidat.id }}</strong></small></p>
+                                    <p class="card-text mb-0"><small>Oluşturulma Tarihi: <strong>{{ aidat.olusturulma_tarihi }}</strong></small></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{{ url_for('index') }}" class="btn btn-secondary me-md-2">
+                            <i class="fas fa-times me-1"></i>İptal
+                        </a>
+                        <button type="submit" class="btn btn-warning">
+                            <i class="fas fa-save me-1"></i>Güncelle
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function() {
+        // Form alanlarına odaklanıldığında efekt
+        $('.form-control, .form-select').focus(function() {
+            $(this).closest('.input-group').addClass('shadow-sm');
+        }).blur(function() {
+            $(this).closest('.input-group').removeClass('shadow-sm');
+        });
+    });
+</script>
+{% endblock %}

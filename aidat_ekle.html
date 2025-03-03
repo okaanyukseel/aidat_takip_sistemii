@@ -1,0 +1,82 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-plus-circle me-2"></i>Yeni Aidat Ekle
+                </h4>
+            </div>
+            <div class="card-body">
+                <form action="{{ url_for('aidat_ekle') }}" method="POST">
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label for="uye_id" class="form-label">Üye <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                <select class="form-select" id="uye_id" name="uye_id" required>
+                                    <option value="">-- Üye Seçin --</option>
+                                    {% for uye in uyeler %}
+                                        <option value="{{ uye.id }}">{{ uye.isim }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="miktar" class="form-label">Miktar (TL) <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-lira-sign"></i></span>
+                                <input type="number" class="form-control" id="miktar" name="miktar" step="0.01" min="0" placeholder="Ödeme miktarı" required>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="tarih" class="form-label">Tarih <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                                <input type="date" class="form-control" id="tarih" name="tarih" value="{{ tarih }}" required>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-12 mb-4">
+                            <label for="durum" class="form-label">Durum</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-check-circle"></i></span>
+                                <select class="form-select" id="durum" name="durum">
+                                    <option value="Ödendi">Ödendi</option>
+                                    <option value="Ödenmedi">Ödenmedi</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{{ url_for('index') }}" class="btn btn-secondary me-md-2">
+                            <i class="fas fa-times me-1"></i>İptal
+                        </a>
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-save me-1"></i>Kaydet
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function() {
+        // Form alanlarına odaklanıldığında efekt
+        $('.form-control, .form-select').focus(function() {
+            $(this).closest('.input-group').addClass('shadow-sm');
+        }).blur(function() {
+            $(this).closest('.input-group').removeClass('shadow-sm');
+        });
+    });
+</script>
+{% endblock %}
