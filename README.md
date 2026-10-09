@@ -17,8 +17,3 @@ Dernek, apartman veya benzeri toplulukların üye aidatlarını takip etmek içi
 - **Veritabanı**: SQLite
 - **Frontend**: HTML, CSS, JavaScript, Bootstrap 5
 - **İkonlar**: Font Awesome
-
-
-## Lisans
-
-Bu proje MIT lisansı altında lisanslanmıştır. Daha fazla bilgi için [LICENSE](LICENSE) dosyasına bakın.
